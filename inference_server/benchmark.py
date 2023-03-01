@@ -18,6 +18,17 @@ from .utils import (
     run_and_log_time,
 )
 
+import os
+
+def mapping_impi_to_torch():
+    os.environ['LOCAL_RANK'] = os.environ['MPI_LOCALRANKID']
+    os.environ['LOCAL_SIZE'] = os.environ['MPI_LOCALNRANKS']
+    os.environ['RANK'] = os.environ['PMI_RANK']
+    os.environ['WORLD_SIZE'] = os.environ['PMI_SIZE']
+    os.environ['CROSS_RANK'] = '0'
+    os.environ['CROSS_SIZE'] = '1'
+    os.environ['MASTER_ADDR'] = 'localhost'
+    os.environ['MASTER_PORT'] = '44434'
 
 def benchmark_generation(model: ModelDeployment, request: GenerateRequest, cycles: int = 5):
     # run benchmarks for number of cycles
@@ -111,6 +122,7 @@ def get_args() -> argparse.Namespace:
 
 def main() -> None:
     args = get_args()
+    mapping_impi_to_torch()
     start_inference_engine(args.deployment_framework)
     benchmark_end_to_end(args)
 
