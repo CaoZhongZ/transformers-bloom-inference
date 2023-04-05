@@ -21,6 +21,11 @@ def parse_args():
                         help="Master node (rank 0)'s free port that needs to "
                         "be used for communication during distributed "
                         "training")
+    parser.add_argument("--debug_node",
+                        default=-1,
+                        type=int,
+                        help="Would set a ipdb trace to stop the script and open "
+                        "interactive debug CLI")
     parser.add_argument("--module",
                         action="store_true",
                         help="Change each process to interpret the launch "
@@ -46,6 +51,7 @@ def mapping_impi_to_deepspeed(args):
     #
     os.environ['MASTER_ADDR'] = str(args.master_addr)
     os.environ['MASTER_PORT'] = str(args.master_port)
+    os.environ['DEBUG_NODE'] = str(args.debug_node)
 
 def main():
     args = parse_args()
