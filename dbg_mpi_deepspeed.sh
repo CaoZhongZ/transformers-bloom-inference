@@ -1,6 +1,7 @@
 export CCL_SYCL_OUTPUT_EVENT=1
 export CCL_USE_EXTERNAL_QUEUE=1
 
+__model_name=bloom-560m
 debugger=ipdb3
 # debugger="gdbserver :44333 python"
 
