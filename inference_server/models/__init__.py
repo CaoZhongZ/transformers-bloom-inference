@@ -24,7 +24,6 @@ def get_model_class(deployment_framework: str):
 
 def start_inference_engine(deployment_framework: str) -> None:
     if deployment_framework in [DS_INFERENCE, DS_ZERO]:
-        import intel_extension_for_deepspeed
         import deepspeed
 
         deepspeed.init_distributed("ccl")
